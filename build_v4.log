@@ -1,0 +1,824 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Containerfile
+#1 transferring dockerfile: 5.59kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.11.9-slim-bookworm
+#2 DONE 2.6s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 83B done
+#3 DONE 0.0s
+
+#4 [base 1/5] FROM docker.io/library/python:3.11.9-slim-bookworm@sha256:8fb099199b9f2d70342674bd9dbccd3ed03a258f26bbd1d556822c6dfc60c317
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 383B done
+#5 DONE 0.0s
+
+#6 [base 2/5] COPY resources/core/nginx/nginx-template.conf /templates/nginx/frappe.conf.template
+#6 CACHED
+
+#7 [base 3/5] COPY resources/core/nginx/nginx-entrypoint.sh /usr/local/bin/nginx-entrypoint.sh
+#7 CACHED
+
+#8 [base 4/5] COPY resources/core/nginx/security_headers.conf /etc/nginx/snippets/security_headers.conf
+#8 CACHED
+
+#9 [base 5/5] RUN useradd -ms /bin/bash frappe     && apt-get update     && apt-get install --no-install-recommends -y     curl     git     vim     nginx     gettext-base     file     libpango-1.0-0     libharfbuzz0b     libpangoft2-1.0-0     libpangocairo-1.0-0     restic     gpg     mariadb-client     less     libpq-dev     postgresql-client     wait-for-it     jq     media-types     && mkdir -p /home/frappe/.nvm     && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash     && . /home/frappe/.nvm/nvm.sh     && nvm install 20.19.0     && nvm use v20.19.0     && npm install -g yarn     && corepack enable pnpm     && nvm alias default v20.19.0     && rm -rf /home/frappe/.nvm/.cache     && echo 'export NVM_DIR="/home/frappe/.nvm"' >>/home/frappe/.bashrc     && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' >>/home/frappe/.bashrc     && echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' >>/home/frappe/.bashrc     && if [ "$(uname -m)" = "aarch64" ]; then export ARCH=arm64; fi     && if [ "$(uname -m)" = "x86_64" ]; then export ARCH=amd64; fi     && downloaded_file=wkhtmltox_0.12.6.1-3.bookworm_${ARCH}.deb     && curl -sLO https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/$downloaded_file     && apt-get install -y ./$downloaded_file     && rm $downloaded_file     && if [ "true" != "false" ]; then         DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y         chromium-headless-shell;     fi     && rm -rf /var/lib/apt/lists/*     && rm -fr /etc/nginx/sites-enabled/default     && mkdir -p /etc/nginx/snippets     && pip3 install frappe-bench     && sed -i '/user www-data/d' /etc/nginx/nginx.conf     && ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log     && touch /run/nginx.pid     && chown -R frappe:frappe /etc/nginx/conf.d     && chown -R frappe:frappe /etc/nginx/nginx.conf     && chown -R frappe:frappe /etc/nginx/snippets     && chown -R frappe:frappe /var/log/nginx     && chown -R frappe:frappe /var/lib/nginx     && chown -R frappe:frappe /run/nginx.pid     && chmod 755 /usr/local/bin/nginx-entrypoint.sh     && chmod 644 /templates/nginx/frappe.conf.template
+#9 0.604 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#9 1.590 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#9 1.912 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [48.0 kB]
+#9 2.140 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8790 kB]
+#9 39.84 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+#9 39.88 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [312 kB]
+#9 41.16 Fetched 9363 kB in 40s (233 kB/s)
+#9 41.16 Reading package lists...
+#9 41.98 Reading package lists...
+#9 42.92 Building dependency tree...
+#9 43.13 Reading state information...
+#9 43.37 The following additional packages will be installed:
+#9 43.37   fontconfig fontconfig-config fonts-dejavu-core git-man gpgconf gpgv iproute2
+#9 43.37   libassuan0 libbpf1 libbrotli1 libbsd0 libcairo2 libcap2 libcap2-bin
+#9 43.37   libconfig-inifiles-perl libcurl3-gnutls libcurl4 libdatrie1 libedit2 libelf1
+#9 43.37   liberror-perl libfontconfig1 libfreetype6 libfribidi0 libgdbm-compat4
+#9 43.37   libglib2.0-0 libgpm2 libgraphite2-3 libjq1 libldap-2.5-0 libmagic-mgc
+#9 43.37   libmagic1 libmariadb3 libmnl0 libncurses6 libnghttp2-14 libonig5 libperl5.36
+#9 43.37   libpixman-1-0 libpng16-16 libpq5 libpsl5 librtmp1 libsasl2-2
+#9 43.37   libsasl2-modules-db libsodium23 libssh2-1 libssl-dev libssl3 libthai-data
+#9 43.37   libthai0 libx11-6 libx11-data libxau6 libxcb-render0 libxcb-shm0 libxcb1
+#9 43.37   libxdmcp6 libxext6 libxrender1 libxtables12 mariadb-client-core
+#9 43.37   mariadb-common mysql-common nginx-common openssl perl perl-base
+#9 43.38   perl-modules-5.36 postgresql-client-15 postgresql-client-common
+#9 43.38   sensible-utils vim-common vim-runtime
+#9 43.38 Suggested packages:
+#9 43.38   git-daemon-run | git-daemon-sysvinit git-doc git-email git-gui gitk gitweb
+#9 43.38   git-cvs git-mediawiki git-svn gnupg iproute2-doc python3:any
+#9 43.38   low-memory-monitor gpm postgresql-doc-15 libssl-doc fcgiwrap nginx-doc
+#9 43.38   ssl-cert perl-doc libterm-readline-gnu-perl | libterm-readline-perl-perl
+#9 43.38   make libtap-harness-archive-perl postgresql-15 libjs-sphinxdoc
+#9 43.38   sphinx-rtd-theme-common ctags vim-doc vim-scripts
+#9 43.38 Recommended packages:
+#9 43.38   patch ssh-client gnupg libatm1 libpam-cap libglib2.0-data shared-mime-info
+#9 43.38   xdg-user-dirs libldap-common publicsuffix libsasl2-modules
+#9 43.38   libdbd-mariadb-perl | libdbd-mysql-perl libdbi-perl libterm-readkey-perl
+#9 43.38   fuse xxd
+#9 44.01 The following NEW packages will be installed:
+#9 44.01   curl file fontconfig fontconfig-config fonts-dejavu-core gettext-base git
+#9 44.02   git-man gpg gpgconf iproute2 jq less libassuan0 libbpf1 libbrotli1 libbsd0
+#9 44.02   libcairo2 libcap2-bin libconfig-inifiles-perl libcurl3-gnutls libcurl4
+#9 44.02   libdatrie1 libedit2 libelf1 liberror-perl libfontconfig1 libfreetype6
+#9 44.02   libfribidi0 libgdbm-compat4 libglib2.0-0 libgpm2 libgraphite2-3
+#9 44.02   libharfbuzz0b libjq1 libldap-2.5-0 libmagic-mgc libmagic1 libmariadb3
+#9 44.02   libmnl0 libncurses6 libnghttp2-14 libonig5 libpango-1.0-0
+#9 44.02   libpangocairo-1.0-0 libpangoft2-1.0-0 libperl5.36 libpixman-1-0 libpng16-16
+#9 44.02   libpq-dev libpq5 libpsl5 librtmp1 libsasl2-2 libsasl2-modules-db libsodium23
+#9 44.02   libssh2-1 libssl-dev libthai-data libthai0 libx11-6 libx11-data libxau6
+#9 44.02   libxcb-render0 libxcb-shm0 libxcb1 libxdmcp6 libxext6 libxrender1
+#9 44.02   libxtables12 mariadb-client mariadb-client-core mariadb-common media-types
+#9 44.02   mysql-common nginx nginx-common perl perl-modules-5.36 postgresql-client
+#9 44.02   postgresql-client-15 postgresql-client-common restic sensible-utils vim
+#9 44.02   vim-common vim-runtime wait-for-it
+#9 44.02 The following packages will be upgraded:
+#9 44.02   gpgv libcap2 libssl3 openssl perl-base
+#9 44.12 5 upgraded, 88 newly installed, 0 to remove and 44 not upgraded.
+#9 44.12 Need to get 64.3 MB of archives.
+#9 44.12 After this operation, 312 MB of additional disk space will be used.
+#9 44.12 Get:1 http://deb.debian.org/debian bookworm/main amd64 perl-base amd64 5.36.0-7+deb12u3 [1608 kB]
+#9 44.91 Get:2 http://deb.debian.org/debian bookworm/main amd64 perl-modules-5.36 all 5.36.0-7+deb12u3 [2815 kB]
+#9 46.74 Get:3 http://deb.debian.org/debian bookworm/main amd64 libgdbm-compat4 amd64 1.23-3 [48.2 kB]
+#9 46.74 Get:4 http://deb.debian.org/debian bookworm/main amd64 libperl5.36 amd64 5.36.0-7+deb12u3 [4196 kB]
+#9 48.71 Get:5 http://deb.debian.org/debian bookworm/main amd64 perl amd64 5.36.0-7+deb12u3 [239 kB]
+#9 48.73 Get:6 http://deb.debian.org/debian bookworm/main amd64 gpgv amd64 2.2.40-1.1+deb12u2 [649 kB]
+#9 49.00 Get:7 http://deb.debian.org/debian bookworm/main amd64 libcap2 amd64 1:2.66-4+deb12u3+b1 [27.7 kB]
+#9 49.02 Get:8 http://deb.debian.org/debian bookworm/main amd64 libelf1 amd64 0.188-2.1 [174 kB]
+#9 49.09 Get:9 http://deb.debian.org/debian bookworm/main amd64 libbpf1 amd64 1:1.1.2-0+deb12u1 [145 kB]
+#9 49.14 Get:10 http://deb.debian.org/debian bookworm/main amd64 libbsd0 amd64 0.11.7-2 [117 kB]
+#9 49.19 Get:11 http://deb.debian.org/debian bookworm/main amd64 libmnl0 amd64 1.0.4-3 [12.5 kB]
+#9 49.20 Get:12 http://deb.debian.org/debian bookworm/main amd64 libxtables12 amd64 1.8.9-2 [30.8 kB]
+#9 49.21 Get:13 http://deb.debian.org/debian bookworm/main amd64 libcap2-bin amd64 1:2.66-4+deb12u3+b1 [35.2 kB]
+#9 49.22 Get:14 http://deb.debian.org/debian bookworm/main amd64 iproute2 amd64 6.1.0-3 [1046 kB]
+#9 49.69 Get:15 http://deb.debian.org/debian bookworm/main amd64 less amd64 590-2.1~deb12u2 [132 kB]
+#9 49.74 Get:16 http://deb.debian.org/debian bookworm/main amd64 sensible-utils all 0.0.17+nmu1 [19.0 kB]
+#9 49.75 Get:17 http://deb.debian.org/debian bookworm/main amd64 vim-common all 2:9.0.1378-2+deb12u2 [125 kB]
+#9 49.80 Get:18 http://deb.debian.org/debian bookworm/main amd64 libmagic-mgc amd64 1:5.44-3 [305 kB]
+#9 49.91 Get:19 http://deb.debian.org/debian bookworm/main amd64 libmagic1 amd64 1:5.44-3 [104 kB]
+#9 49.95 Get:20 http://deb.debian.org/debian bookworm/main amd64 file amd64 1:5.44-3 [42.5 kB]
+#9 49.98 Get:21 http://deb.debian.org/debian bookworm/main amd64 gettext-base amd64 0.21-12 [160 kB]
+#9 50.07 Get:22 http://deb.debian.org/debian bookworm/main amd64 media-types all 10.0.0 [26.1 kB]
+#9 50.09 Get:23 http://deb.debian.org/debian bookworm/main amd64 libbrotli1 amd64 1.0.9-2+b6 [275 kB]
+#9 50.20 Get:24 http://deb.debian.org/debian bookworm/main amd64 libsasl2-modules-db amd64 2.1.28+dfsg-10 [20.3 kB]
+#9 50.21 Get:25 http://deb.debian.org/debian bookworm/main amd64 libsasl2-2 amd64 2.1.28+dfsg-10 [59.7 kB]
+#9 50.25 Get:26 http://deb.debian.org/debian bookworm/main amd64 libldap-2.5-0 amd64 2.5.13+dfsg-5 [183 kB]
+#9 50.31 Get:27 http://deb.debian.org/debian-security bookworm-security/main amd64 libnghttp2-14 amd64 1.52.0-1+deb12u3 [72.4 kB]
+#9 50.34 Get:28 http://deb.debian.org/debian bookworm/main amd64 libpsl5 amd64 0.21.2-1 [58.7 kB]
+#9 50.37 Get:29 http://deb.debian.org/debian bookworm/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-2+b2 [60.8 kB]
+#9 50.39 Get:30 http://deb.debian.org/debian-security bookworm-security/main amd64 libssl3 amd64 3.0.20-1~deb12u2 [2036 kB]
+#9 51.21 Get:31 http://deb.debian.org/debian bookworm/main amd64 libssh2-1 amd64 1.10.0-3+b1 [179 kB]
+#9 51.29 Get:32 http://deb.debian.org/debian bookworm/main amd64 libcurl4 amd64 7.88.1-10+deb12u14 [392 kB]
+#9 51.43 Get:33 http://deb.debian.org/debian bookworm/main amd64 curl amd64 7.88.1-10+deb12u14 [316 kB]
+#9 51.55 Get:34 http://deb.debian.org/debian bookworm/main amd64 libpng16-16 amd64 1.6.39-2+deb12u5 [277 kB]
+#9 51.67 Get:35 http://deb.debian.org/debian bookworm/main amd64 libfreetype6 amd64 2.12.1+dfsg-5+deb12u4 [398 kB]
+#9 51.83 Get:36 http://deb.debian.org/debian bookworm/main amd64 fonts-dejavu-core all 2.37-6 [1068 kB]
+#9 52.24 Get:37 http://deb.debian.org/debian bookworm/main amd64 fontconfig-config amd64 2.14.1-4 [315 kB]
+#9 52.42 Get:38 http://deb.debian.org/debian bookworm/main amd64 libfontconfig1 amd64 2.14.1-4 [386 kB]
+#9 52.58 Get:39 http://deb.debian.org/debian bookworm/main amd64 fontconfig amd64 2.14.1-4 [449 kB]
+#9 52.78 Get:40 http://deb.debian.org/debian bookworm/main amd64 libcurl3-gnutls amd64 7.88.1-10+deb12u14 [386 kB]
+#9 52.91 Get:41 http://deb.debian.org/debian bookworm/main amd64 liberror-perl all 0.17029-2 [29.0 kB]
+#9 52.93 Get:42 http://deb.debian.org/debian bookworm/main amd64 git-man all 1:2.39.5-0+deb12u3 [2053 kB]
+#9 53.78 Get:43 http://deb.debian.org/debian bookworm/main amd64 git amd64 1:2.39.5-0+deb12u3 [7264 kB]
+#9 56.66 Get:44 http://deb.debian.org/debian bookworm/main amd64 libassuan0 amd64 2.5.5-5 [48.5 kB]
+#9 56.69 Get:45 http://deb.debian.org/debian bookworm/main amd64 gpgconf amd64 2.2.40-1.1+deb12u2 [565 kB]
+#9 56.93 Get:46 http://deb.debian.org/debian bookworm/main amd64 gpg amd64 2.2.40-1.1+deb12u2 [950 kB]
+#9 57.29 Get:47 http://deb.debian.org/debian bookworm/main amd64 libonig5 amd64 6.9.8-1 [188 kB]
+#9 57.38 Get:48 http://deb.debian.org/debian bookworm/main amd64 libjq1 amd64 1.6-2.1+deb12u1 [134 kB]
+#9 57.43 Get:49 http://deb.debian.org/debian bookworm/main amd64 jq amd64 1.6-2.1+deb12u1 [63.7 kB]
+#9 57.45 Get:50 http://deb.debian.org/debian bookworm/main amd64 libpixman-1-0 amd64 0.42.2-1 [546 kB]
+#9 58.24 Get:51 http://deb.debian.org/debian bookworm/main amd64 libxau6 amd64 1:1.0.9-1 [19.7 kB]
+#9 58.25 Get:52 http://deb.debian.org/debian bookworm/main amd64 libxdmcp6 amd64 1:1.1.2-3 [26.3 kB]
+#9 58.29 Get:53 http://deb.debian.org/debian bookworm/main amd64 libxcb1 amd64 1.15-1 [144 kB]
+#9 58.35 Get:54 http://deb.debian.org/debian bookworm/main amd64 libx11-data all 2:1.8.4-2+deb12u2 [292 kB]
+#9 58.48 Get:55 http://deb.debian.org/debian bookworm/main amd64 libx11-6 amd64 2:1.8.4-2+deb12u2 [760 kB]
+#9 58.80 Get:56 http://deb.debian.org/debian bookworm/main amd64 libxcb-render0 amd64 1.15-1 [115 kB]
+#9 58.85 Get:57 http://deb.debian.org/debian bookworm/main amd64 libxcb-shm0 amd64 1.15-1 [105 kB]
+#9 58.90 Get:58 http://deb.debian.org/debian bookworm/main amd64 libxext6 amd64 2:1.3.4-1+b1 [52.9 kB]
+#9 58.93 Get:59 http://deb.debian.org/debian bookworm/main amd64 libxrender1 amd64 1:0.9.10-1.1 [33.2 kB]
+#9 58.96 Get:60 http://deb.debian.org/debian bookworm/main amd64 libcairo2 amd64 1.16.0-7 [575 kB]
+#9 59.26 Get:61 http://deb.debian.org/debian bookworm/main amd64 libconfig-inifiles-perl all 3.000003-2 [45.9 kB]
+#9 59.30 Get:62 http://deb.debian.org/debian bookworm/main amd64 libdatrie1 amd64 0.2.13-2+b1 [43.3 kB]
+#9 59.32 Get:63 http://deb.debian.org/debian bookworm/main amd64 libedit2 amd64 3.1-20221030-2 [93.0 kB]
+#9 59.36 Get:64 http://deb.debian.org/debian bookworm/main amd64 libfribidi0 amd64 1.0.8-2.1 [65.0 kB]
+#9 59.41 Get:65 http://deb.debian.org/debian bookworm/main amd64 libglib2.0-0 amd64 2.74.6-2+deb12u9 [1403 kB]
+#9 59.99 Get:66 http://deb.debian.org/debian bookworm/main amd64 libgpm2 amd64 1.20.7-10+b1 [14.2 kB]
+#9 59.99 Get:67 http://deb.debian.org/debian bookworm/main amd64 libgraphite2-3 amd64 1.3.14-1 [81.2 kB]
+#9 60.02 Get:68 http://deb.debian.org/debian bookworm/main amd64 libharfbuzz0b amd64 6.0.0+dfsg-3 [1945 kB]
+#9 60.80 Get:69 http://deb.debian.org/debian bookworm/main amd64 mysql-common all 5.8+1.1.0 [6636 B]
+#9 60.81 Get:70 http://deb.debian.org/debian bookworm/main amd64 mariadb-common all 1:10.11.14-0+deb12u2 [26.3 kB]
+#9 60.84 Get:71 http://deb.debian.org/debian bookworm/main amd64 libmariadb3 amd64 1:10.11.14-0+deb12u2 [182 kB]
+#9 60.91 Get:72 http://deb.debian.org/debian bookworm/main amd64 libncurses6 amd64 6.4-4 [103 kB]
+#9 60.94 Get:73 http://deb.debian.org/debian bookworm/main amd64 libthai-data all 0.1.29-1 [176 kB]
+#9 61.04 Get:74 http://deb.debian.org/debian bookworm/main amd64 libthai0 amd64 0.1.29-1 [57.5 kB]
+#9 61.07 Get:75 http://deb.debian.org/debian bookworm/main amd64 libpango-1.0-0 amd64 1.50.12+ds-1 [212 kB]
+#9 61.14 Get:76 http://deb.debian.org/debian bookworm/main amd64 libpangoft2-1.0-0 amd64 1.50.12+ds-1 [47.4 kB]
+#9 61.18 Get:77 http://deb.debian.org/debian bookworm/main amd64 libpangocairo-1.0-0 amd64 1.50.12+ds-1 [34.2 kB]
+#9 61.21 Get:78 http://deb.debian.org/debian-security bookworm-security/main amd64 libpq5 amd64 15.18-0+deb12u1 [197 kB]
+#9 61.30 Get:79 http://deb.debian.org/debian-security bookworm-security/main amd64 libssl-dev amd64 3.0.20-1~deb12u2 [2443 kB]
+#9 62.30 Get:80 http://deb.debian.org/debian-security bookworm-security/main amd64 libpq-dev amd64 15.18-0+deb12u1 [151 kB]
+#9 62.38 Get:81 http://deb.debian.org/debian bookworm/main amd64 libsodium23 amd64 1.0.18-1+deb12u1 [162 kB]
+#9 62.47 Get:82 http://deb.debian.org/debian bookworm/main amd64 mariadb-client-core amd64 1:10.11.14-0+deb12u2 [894 kB]
+#9 62.86 Get:83 http://deb.debian.org/debian bookworm/main amd64 mariadb-client amd64 1:10.11.14-0+deb12u2 [3030 kB]
+#9 64.13 Get:84 http://deb.debian.org/debian-security bookworm-security/main amd64 nginx-common all 1.22.1-9+deb12u8 [115 kB]
+#9 64.18 Get:85 http://deb.debian.org/debian-security bookworm-security/main amd64 nginx amd64 1.22.1-9+deb12u8 [529 kB]
+#9 64.69 Get:86 http://deb.debian.org/debian-security bookworm-security/main amd64 openssl amd64 3.0.20-1~deb12u2 [1439 kB]
+#9 65.69 Get:87 http://deb.debian.org/debian bookworm/main amd64 postgresql-client-common all 248+deb12u1 [35.2 kB]
+#9 65.71 Get:88 http://deb.debian.org/debian-security bookworm-security/main amd64 postgresql-client-15 amd64 15.18-0+deb12u1 [1747 kB]
+#9 66.38 Get:89 http://deb.debian.org/debian bookworm/main amd64 postgresql-client all 15+248+deb12u1 [10.2 kB]
+#9 66.38 Get:90 http://deb.debian.org/debian bookworm/main amd64 restic amd64 0.14.0-1+b5 [7487 kB]
+#9 69.42 Get:91 http://deb.debian.org/debian bookworm/main amd64 vim-runtime all 2:9.0.1378-2+deb12u2 [7027 kB]
+#9 72.31 Get:92 http://deb.debian.org/debian bookworm/main amd64 vim amd64 2:9.0.1378-2+deb12u2 [1568 kB]
+#9 72.99 Get:93 http://deb.debian.org/debian bookworm/main amd64 wait-for-it all 0.0~git20180723-1 [4384 B]
+#9 73.22 debconf: delaying package configuration, since apt-utils is not installed
+#9 73.28 Fetched 64.3 MB in 28s (2265 kB/s)
+#9 73.32 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6695 files and directories currently installed.)
+#9 73.33 Preparing to unpack .../perl-base_5.36.0-7+deb12u3_amd64.deb ...
+#9 73.36 Unpacking perl-base (5.36.0-7+deb12u3) over (5.36.0-7+deb12u1) ...
+#9 75.69 Setting up perl-base (5.36.0-7+deb12u3) ...
+#9 75.73 Selecting previously unselected package perl-modules-5.36.
+#9 75.73 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6696 files and directories currently installed.)
+#9 75.74 Preparing to unpack .../perl-modules-5.36_5.36.0-7+deb12u3_all.deb ...
+#9 75.75 Unpacking perl-modules-5.36 (5.36.0-7+deb12u3) ...
+#9 76.47 Selecting previously unselected package libgdbm-compat4:amd64.
+#9 76.47 Preparing to unpack .../libgdbm-compat4_1.23-3_amd64.deb ...
+#9 76.48 Unpacking libgdbm-compat4:amd64 (1.23-3) ...
+#9 76.53 Selecting previously unselected package libperl5.36:amd64.
+#9 76.53 Preparing to unpack .../libperl5.36_5.36.0-7+deb12u3_amd64.deb ...
+#9 76.54 Unpacking libperl5.36:amd64 (5.36.0-7+deb12u3) ...
+#9 77.27 Selecting previously unselected package perl.
+#9 77.28 Preparing to unpack .../perl_5.36.0-7+deb12u3_amd64.deb ...
+#9 77.29 Unpacking perl (5.36.0-7+deb12u3) ...
+#9 77.34 Preparing to unpack .../gpgv_2.2.40-1.1+deb12u2_amd64.deb ...
+#9 77.36 Unpacking gpgv (2.2.40-1.1+deb12u2) over (2.2.40-1.1) ...
+#9 77.43 Setting up gpgv (2.2.40-1.1+deb12u2) ...
+#9 77.48 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 8694 files and directories currently installed.)
+#9 77.49 Preparing to unpack .../libcap2_1%3a2.66-4+deb12u3+b1_amd64.deb ...
+#9 77.50 Unpacking libcap2:amd64 (1:2.66-4+deb12u3+b1) over (1:2.66-4) ...
+#9 77.57 Setting up libcap2:amd64 (1:2.66-4+deb12u3+b1) ...
+#9 77.64 Selecting previously unselected package libelf1:amd64.
+#9 77.64 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 8695 files and directories currently installed.)
+#9 77.65 Preparing to unpack .../00-libelf1_0.188-2.1_amd64.deb ...
+#9 77.65 Unpacking libelf1:amd64 (0.188-2.1) ...
+#9 77.71 Selecting previously unselected package libbpf1:amd64.
+#9 77.71 Preparing to unpack .../01-libbpf1_1%3a1.1.2-0+deb12u1_amd64.deb ...
+#9 77.72 Unpacking libbpf1:amd64 (1:1.1.2-0+deb12u1) ...
+#9 77.78 Selecting previously unselected package libbsd0:amd64.
+#9 77.78 Preparing to unpack .../02-libbsd0_0.11.7-2_amd64.deb ...
+#9 77.79 Unpacking libbsd0:amd64 (0.11.7-2) ...
+#9 77.85 Selecting previously unselected package libmnl0:amd64.
+#9 77.85 Preparing to unpack .../03-libmnl0_1.0.4-3_amd64.deb ...
+#9 77.86 Unpacking libmnl0:amd64 (1.0.4-3) ...
+#9 77.91 Selecting previously unselected package libxtables12:amd64.
+#9 77.91 Preparing to unpack .../04-libxtables12_1.8.9-2_amd64.deb ...
+#9 77.92 Unpacking libxtables12:amd64 (1.8.9-2) ...
+#9 77.99 Selecting previously unselected package libcap2-bin.
+#9 77.99 Preparing to unpack .../05-libcap2-bin_1%3a2.66-4+deb12u3+b1_amd64.deb ...
+#9 77.99 Unpacking libcap2-bin (1:2.66-4+deb12u3+b1) ...
+#9 78.07 Selecting previously unselected package iproute2.
+#9 78.07 Preparing to unpack .../06-iproute2_6.1.0-3_amd64.deb ...
+#9 78.08 Unpacking iproute2 (6.1.0-3) ...
+#9 78.26 Selecting previously unselected package less.
+#9 78.26 Preparing to unpack .../07-less_590-2.1~deb12u2_amd64.deb ...
+#9 78.27 Unpacking less (590-2.1~deb12u2) ...
+#9 78.31 Selecting previously unselected package sensible-utils.
+#9 78.31 Preparing to unpack .../08-sensible-utils_0.0.17+nmu1_all.deb ...
+#9 78.32 Unpacking sensible-utils (0.0.17+nmu1) ...
+#9 78.36 Selecting previously unselected package vim-common.
+#9 78.36 Preparing to unpack .../09-vim-common_2%3a9.0.1378-2+deb12u2_all.deb ...
+#9 78.37 Unpacking vim-common (2:9.0.1378-2+deb12u2) ...
+#9 78.42 Selecting previously unselected package libmagic-mgc.
+#9 78.42 Preparing to unpack .../10-libmagic-mgc_1%3a5.44-3_amd64.deb ...
+#9 78.43 Unpacking libmagic-mgc (1:5.44-3) ...
+#9 78.60 Selecting previously unselected package libmagic1:amd64.
+#9 78.60 Preparing to unpack .../11-libmagic1_1%3a5.44-3_amd64.deb ...
+#9 78.61 Unpacking libmagic1:amd64 (1:5.44-3) ...
+#9 78.65 Selecting previously unselected package file.
+#9 78.65 Preparing to unpack .../12-file_1%3a5.44-3_amd64.deb ...
+#9 78.66 Unpacking file (1:5.44-3) ...
+#9 78.70 Selecting previously unselected package gettext-base.
+#9 78.70 Preparing to unpack .../13-gettext-base_0.21-12_amd64.deb ...
+#9 78.70 Unpacking gettext-base (0.21-12) ...
+#9 78.78 Selecting previously unselected package media-types.
+#9 78.78 Preparing to unpack .../14-media-types_10.0.0_all.deb ...
+#9 78.79 Unpacking media-types (10.0.0) ...
+#9 78.83 Selecting previously unselected package libbrotli1:amd64.
+#9 78.83 Preparing to unpack .../15-libbrotli1_1.0.9-2+b6_amd64.deb ...
+#9 78.84 Unpacking libbrotli1:amd64 (1.0.9-2+b6) ...
+#9 78.90 Selecting previously unselected package libsasl2-modules-db:amd64.
+#9 78.90 Preparing to unpack .../16-libsasl2-modules-db_2.1.28+dfsg-10_amd64.deb ...
+#9 78.90 Unpacking libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+#9 78.94 Selecting previously unselected package libsasl2-2:amd64.
+#9 78.95 Preparing to unpack .../17-libsasl2-2_2.1.28+dfsg-10_amd64.deb ...
+#9 78.96 Unpacking libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+#9 79.04 Selecting previously unselected package libldap-2.5-0:amd64.
+#9 79.04 Preparing to unpack .../18-libldap-2.5-0_2.5.13+dfsg-5_amd64.deb ...
+#9 79.05 Unpacking libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+#9 79.14 Selecting previously unselected package libnghttp2-14:amd64.
+#9 79.14 Preparing to unpack .../19-libnghttp2-14_1.52.0-1+deb12u3_amd64.deb ...
+#9 79.15 Unpacking libnghttp2-14:amd64 (1.52.0-1+deb12u3) ...
+#9 79.21 Selecting previously unselected package libpsl5:amd64.
+#9 79.21 Preparing to unpack .../20-libpsl5_0.21.2-1_amd64.deb ...
+#9 79.22 Unpacking libpsl5:amd64 (0.21.2-1) ...
+#9 79.28 Selecting previously unselected package librtmp1:amd64.
+#9 79.28 Preparing to unpack .../21-librtmp1_2.4+20151223.gitfa8646d.1-2+b2_amd64.deb ...
+#9 79.29 Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#9 79.34 Preparing to unpack .../22-libssl3_3.0.20-1~deb12u2_amd64.deb ...
+#9 79.36 Unpacking libssl3:amd64 (3.0.20-1~deb12u2) over (3.0.14-1~deb12u2) ...
+#9 79.68 Selecting previously unselected package libssh2-1:amd64.
+#9 79.68 Preparing to unpack .../23-libssh2-1_1.10.0-3+b1_amd64.deb ...
+#9 79.69 Unpacking libssh2-1:amd64 (1.10.0-3+b1) ...
+#9 79.76 Selecting previously unselected package libcurl4:amd64.
+#9 79.76 Preparing to unpack .../24-libcurl4_7.88.1-10+deb12u14_amd64.deb ...
+#9 79.77 Unpacking libcurl4:amd64 (7.88.1-10+deb12u14) ...
+#9 79.88 Selecting previously unselected package curl.
+#9 79.88 Preparing to unpack .../25-curl_7.88.1-10+deb12u14_amd64.deb ...
+#9 79.88 Unpacking curl (7.88.1-10+deb12u14) ...
+#9 79.97 Selecting previously unselected package libpng16-16:amd64.
+#9 79.97 Preparing to unpack .../26-libpng16-16_1.6.39-2+deb12u5_amd64.deb ...
+#9 79.98 Unpacking libpng16-16:amd64 (1.6.39-2+deb12u5) ...
+#9 80.05 Selecting previously unselected package libfreetype6:amd64.
+#9 80.05 Preparing to unpack .../27-libfreetype6_2.12.1+dfsg-5+deb12u4_amd64.deb ...
+#9 80.05 Unpacking libfreetype6:amd64 (2.12.1+dfsg-5+deb12u4) ...
+#9 80.13 Selecting previously unselected package fonts-dejavu-core.
+#9 80.13 Preparing to unpack .../28-fonts-dejavu-core_2.37-6_all.deb ...
+#9 80.14 Unpacking fonts-dejavu-core (2.37-6) ...
+#9 80.29 Selecting previously unselected package fontconfig-config.
+#9 80.30 Preparing to unpack .../29-fontconfig-config_2.14.1-4_amd64.deb ...
+#9 80.44 Unpacking fontconfig-config (2.14.1-4) ...
+#9 80.52 Selecting previously unselected package libfontconfig1:amd64.
+#9 80.52 Preparing to unpack .../30-libfontconfig1_2.14.1-4_amd64.deb ...
+#9 80.52 Unpacking libfontconfig1:amd64 (2.14.1-4) ...
+#9 80.58 Selecting previously unselected package fontconfig.
+#9 80.58 Preparing to unpack .../31-fontconfig_2.14.1-4_amd64.deb ...
+#9 80.58 Unpacking fontconfig (2.14.1-4) ...
+#9 80.64 Selecting previously unselected package libcurl3-gnutls:amd64.
+#9 80.64 Preparing to unpack .../32-libcurl3-gnutls_7.88.1-10+deb12u14_amd64.deb ...
+#9 80.65 Unpacking libcurl3-gnutls:amd64 (7.88.1-10+deb12u14) ...
+#9 80.71 Selecting previously unselected package liberror-perl.
+#9 80.71 Preparing to unpack .../33-liberror-perl_0.17029-2_all.deb ...
+#9 80.72 Unpacking liberror-perl (0.17029-2) ...
+#9 80.92 Selecting previously unselected package git-man.
+#9 80.92 Preparing to unpack .../34-git-man_1%3a2.39.5-0+deb12u3_all.deb ...
+#9 80.94 Unpacking git-man (1:2.39.5-0+deb12u3) ...
+#9 81.14 Selecting previously unselected package git.
+#9 81.14 Preparing to unpack .../35-git_1%3a2.39.5-0+deb12u3_amd64.deb ...
+#9 81.15 Unpacking git (1:2.39.5-0+deb12u3) ...
+#9 82.09 Selecting previously unselected package libassuan0:amd64.
+#9 82.10 Preparing to unpack .../36-libassuan0_2.5.5-5_amd64.deb ...
+#9 82.10 Unpacking libassuan0:amd64 (2.5.5-5) ...
+#9 82.14 Selecting previously unselected package gpgconf.
+#9 82.14 Preparing to unpack .../37-gpgconf_2.2.40-1.1+deb12u2_amd64.deb ...
+#9 82.14 Unpacking gpgconf (2.2.40-1.1+deb12u2) ...
+#9 82.20 Selecting previously unselected package gpg.
+#9 82.20 Preparing to unpack .../38-gpg_2.2.40-1.1+deb12u2_amd64.deb ...
+#9 82.20 Unpacking gpg (2.2.40-1.1+deb12u2) ...
+#9 82.32 Selecting previously unselected package libonig5:amd64.
+#9 82.32 Preparing to unpack .../39-libonig5_6.9.8-1_amd64.deb ...
+#9 82.32 Unpacking libonig5:amd64 (6.9.8-1) ...
+#9 82.38 Selecting previously unselected package libjq1:amd64.
+#9 82.39 Preparing to unpack .../40-libjq1_1.6-2.1+deb12u1_amd64.deb ...
+#9 82.39 Unpacking libjq1:amd64 (1.6-2.1+deb12u1) ...
+#9 82.46 Selecting previously unselected package jq.
+#9 82.46 Preparing to unpack .../41-jq_1.6-2.1+deb12u1_amd64.deb ...
+#9 82.47 Unpacking jq (1.6-2.1+deb12u1) ...
+#9 82.52 Selecting previously unselected package libpixman-1-0:amd64.
+#9 82.52 Preparing to unpack .../42-libpixman-1-0_0.42.2-1_amd64.deb ...
+#9 82.52 Unpacking libpixman-1-0:amd64 (0.42.2-1) ...
+#9 82.58 Selecting previously unselected package libxau6:amd64.
+#9 82.59 Preparing to unpack .../43-libxau6_1%3a1.0.9-1_amd64.deb ...
+#9 82.59 Unpacking libxau6:amd64 (1:1.0.9-1) ...
+#9 82.63 Selecting previously unselected package libxdmcp6:amd64.
+#9 82.63 Preparing to unpack .../44-libxdmcp6_1%3a1.1.2-3_amd64.deb ...
+#9 82.63 Unpacking libxdmcp6:amd64 (1:1.1.2-3) ...
+#9 82.67 Selecting previously unselected package libxcb1:amd64.
+#9 82.67 Preparing to unpack .../45-libxcb1_1.15-1_amd64.deb ...
+#9 82.68 Unpacking libxcb1:amd64 (1.15-1) ...
+#9 82.72 Selecting previously unselected package libx11-data.
+#9 82.72 Preparing to unpack .../46-libx11-data_2%3a1.8.4-2+deb12u2_all.deb ...
+#9 82.72 Unpacking libx11-data (2:1.8.4-2+deb12u2) ...
+#9 82.85 Selecting previously unselected package libx11-6:amd64.
+#9 82.85 Preparing to unpack .../47-libx11-6_2%3a1.8.4-2+deb12u2_amd64.deb ...
+#9 82.86 Unpacking libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
+#9 82.96 Selecting previously unselected package libxcb-render0:amd64.
+#9 82.97 Preparing to unpack .../48-libxcb-render0_1.15-1_amd64.deb ...
+#9 82.97 Unpacking libxcb-render0:amd64 (1.15-1) ...
+#9 83.02 Selecting previously unselected package libxcb-shm0:amd64.
+#9 83.03 Preparing to unpack .../49-libxcb-shm0_1.15-1_amd64.deb ...
+#9 83.03 Unpacking libxcb-shm0:amd64 (1.15-1) ...
+#9 83.08 Selecting previously unselected package libxext6:amd64.
+#9 83.08 Preparing to unpack .../50-libxext6_2%3a1.3.4-1+b1_amd64.deb ...
+#9 83.08 Unpacking libxext6:amd64 (2:1.3.4-1+b1) ...
+#9 83.12 Selecting previously unselected package libxrender1:amd64.
+#9 83.13 Preparing to unpack .../51-libxrender1_1%3a0.9.10-1.1_amd64.deb ...
+#9 83.13 Unpacking libxrender1:amd64 (1:0.9.10-1.1) ...
+#9 83.18 Selecting previously unselected package libcairo2:amd64.
+#9 83.18 Preparing to unpack .../52-libcairo2_1.16.0-7_amd64.deb ...
+#9 83.19 Unpacking libcairo2:amd64 (1.16.0-7) ...
+#9 83.30 Selecting previously unselected package libconfig-inifiles-perl.
+#9 83.30 Preparing to unpack .../53-libconfig-inifiles-perl_3.000003-2_all.deb ...
+#9 83.30 Unpacking libconfig-inifiles-perl (3.000003-2) ...
+#9 83.35 Selecting previously unselected package libdatrie1:amd64.
+#9 83.35 Preparing to unpack .../54-libdatrie1_0.2.13-2+b1_amd64.deb ...
+#9 83.36 Unpacking libdatrie1:amd64 (0.2.13-2+b1) ...
+#9 83.42 Selecting previously unselected package libedit2:amd64.
+#9 83.42 Preparing to unpack .../55-libedit2_3.1-20221030-2_amd64.deb ...
+#9 83.43 Unpacking libedit2:amd64 (3.1-20221030-2) ...
+#9 83.49 Selecting previously unselected package libfribidi0:amd64.
+#9 83.49 Preparing to unpack .../56-libfribidi0_1.0.8-2.1_amd64.deb ...
+#9 83.49 Unpacking libfribidi0:amd64 (1.0.8-2.1) ...
+#9 83.55 Selecting previously unselected package libglib2.0-0:amd64.
+#9 83.55 Preparing to unpack .../57-libglib2.0-0_2.74.6-2+deb12u9_amd64.deb ...
+#9 83.55 Unpacking libglib2.0-0:amd64 (2.74.6-2+deb12u9) ...
+#9 83.75 Selecting previously unselected package libgpm2:amd64.
+#9 83.75 Preparing to unpack .../58-libgpm2_1.20.7-10+b1_amd64.deb ...
+#9 83.75 Unpacking libgpm2:amd64 (1.20.7-10+b1) ...
+#9 83.79 Selecting previously unselected package libgraphite2-3:amd64.
+#9 83.79 Preparing to unpack .../59-libgraphite2-3_1.3.14-1_amd64.deb ...
+#9 83.80 Unpacking libgraphite2-3:amd64 (1.3.14-1) ...
+#9 83.84 Selecting previously unselected package libharfbuzz0b:amd64.
+#9 83.84 Preparing to unpack .../60-libharfbuzz0b_6.0.0+dfsg-3_amd64.deb ...
+#9 83.85 Unpacking libharfbuzz0b:amd64 (6.0.0+dfsg-3) ...
+#9 83.97 Selecting previously unselected package mysql-common.
+#9 83.98 Preparing to unpack .../61-mysql-common_5.8+1.1.0_all.deb ...
+#9 83.99 Unpacking mysql-common (5.8+1.1.0) ...
+#9 84.04 Selecting previously unselected package mariadb-common.
+#9 84.04 Preparing to unpack .../62-mariadb-common_1%3a10.11.14-0+deb12u2_all.deb ...
+#9 84.05 Unpacking mariadb-common (1:10.11.14-0+deb12u2) ...
+#9 84.09 Selecting previously unselected package libmariadb3:amd64.
+#9 84.09 Preparing to unpack .../63-libmariadb3_1%3a10.11.14-0+deb12u2_amd64.deb ...
+#9 84.10 Unpacking libmariadb3:amd64 (1:10.11.14-0+deb12u2) ...
+#9 84.15 Selecting previously unselected package libncurses6:amd64.
+#9 84.16 Preparing to unpack .../64-libncurses6_6.4-4_amd64.deb ...
+#9 84.16 Unpacking libncurses6:amd64 (6.4-4) ...
+#9 84.21 Selecting previously unselected package libthai-data.
+#9 84.21 Preparing to unpack .../65-libthai-data_0.1.29-1_all.deb ...
+#9 84.22 Unpacking libthai-data (0.1.29-1) ...
+#9 84.30 Selecting previously unselected package libthai0:amd64.
+#9 84.30 Preparing to unpack .../66-libthai0_0.1.29-1_amd64.deb ...
+#9 84.31 Unpacking libthai0:amd64 (0.1.29-1) ...
+#9 84.42 Selecting previously unselected package libpango-1.0-0:amd64.
+#9 84.43 Preparing to unpack .../67-libpango-1.0-0_1.50.12+ds-1_amd64.deb ...
+#9 84.44 Unpacking libpango-1.0-0:amd64 (1.50.12+ds-1) ...
+#9 84.54 Selecting previously unselected package libpangoft2-1.0-0:amd64.
+#9 84.54 Preparing to unpack .../68-libpangoft2-1.0-0_1.50.12+ds-1_amd64.deb ...
+#9 84.55 Unpacking libpangoft2-1.0-0:amd64 (1.50.12+ds-1) ...
+#9 84.62 Selecting previously unselected package libpangocairo-1.0-0:amd64.
+#9 84.62 Preparing to unpack .../69-libpangocairo-1.0-0_1.50.12+ds-1_amd64.deb ...
+#9 84.62 Unpacking libpangocairo-1.0-0:amd64 (1.50.12+ds-1) ...
+#9 84.68 Selecting previously unselected package libpq5:amd64.
+#9 84.68 Preparing to unpack .../70-libpq5_15.18-0+deb12u1_amd64.deb ...
+#9 84.69 Unpacking libpq5:amd64 (15.18-0+deb12u1) ...
+#9 84.75 Selecting previously unselected package libssl-dev:amd64.
+#9 84.75 Preparing to unpack .../71-libssl-dev_3.0.20-1~deb12u2_amd64.deb ...
+#9 84.76 Unpacking libssl-dev:amd64 (3.0.20-1~deb12u2) ...
+#9 85.04 Selecting previously unselected package libpq-dev.
+#9 85.04 Preparing to unpack .../72-libpq-dev_15.18-0+deb12u1_amd64.deb ...
+#9 85.05 Unpacking libpq-dev (15.18-0+deb12u1) ...
+#9 85.11 Selecting previously unselected package libsodium23:amd64.
+#9 85.11 Preparing to unpack .../73-libsodium23_1.0.18-1+deb12u1_amd64.deb ...
+#9 85.11 Unpacking libsodium23:amd64 (1.0.18-1+deb12u1) ...
+#9 85.16 Selecting previously unselected package mariadb-client-core.
+#9 85.16 Preparing to unpack .../74-mariadb-client-core_1%3a10.11.14-0+deb12u2_amd64.deb ...
+#9 85.17 Unpacking mariadb-client-core (1:10.11.14-0+deb12u2) ...
+#9 85.46 Selecting previously unselected package mariadb-client.
+#9 85.46 Preparing to unpack .../75-mariadb-client_1%3a10.11.14-0+deb12u2_amd64.deb ...
+#9 85.47 Unpacking mariadb-client (1:10.11.14-0+deb12u2) ...
+#9 86.71 Selecting previously unselected package nginx-common.
+#9 86.71 Preparing to unpack .../76-nginx-common_1.22.1-9+deb12u8_all.deb ...
+#9 86.72 Unpacking nginx-common (1.22.1-9+deb12u8) ...
+#9 86.81 Selecting previously unselected package nginx.
+#9 86.81 Preparing to unpack .../77-nginx_1.22.1-9+deb12u8_amd64.deb ...
+#9 86.81 Unpacking nginx (1.22.1-9+deb12u8) ...
+#9 86.91 Preparing to unpack .../78-openssl_3.0.20-1~deb12u2_amd64.deb ...
+#9 86.93 Unpacking openssl (3.0.20-1~deb12u2) over (3.0.14-1~deb12u2) ...
+#9 87.11 Selecting previously unselected package postgresql-client-common.
+#9 87.12 Preparing to unpack .../79-postgresql-client-common_248+deb12u1_all.deb ...
+#9 87.12 Unpacking postgresql-client-common (248+deb12u1) ...
+#9 87.17 Selecting previously unselected package postgresql-client-15.
+#9 87.17 Preparing to unpack .../80-postgresql-client-15_15.18-0+deb12u1_amd64.deb ...
+#9 87.18 Unpacking postgresql-client-15 (15.18-0+deb12u1) ...
+#9 87.44 Selecting previously unselected package postgresql-client.
+#9 87.44 Preparing to unpack .../81-postgresql-client_15+248+deb12u1_all.deb ...
+#9 87.45 Unpacking postgresql-client (15+248+deb12u1) ...
+#9 87.51 Selecting previously unselected package restic.
+#9 87.51 Preparing to unpack .../82-restic_0.14.0-1+b5_amd64.deb ...
+#9 87.52 Unpacking restic (0.14.0-1+b5) ...
+#9 88.36 Selecting previously unselected package vim-runtime.
+#9 88.36 Preparing to unpack .../83-vim-runtime_2%3a9.0.1378-2+deb12u2_all.deb ...
+#9 88.37 Adding 'diversion of /usr/share/vim/vim90/doc/help.txt to /usr/share/vim/vim90/doc/help.txt.vim-tiny by vim-runtime'
+#9 88.38 Adding 'diversion of /usr/share/vim/vim90/doc/tags to /usr/share/vim/vim90/doc/tags.vim-tiny by vim-runtime'
+#9 88.39 Unpacking vim-runtime (2:9.0.1378-2+deb12u2) ...
+#9 89.72 Selecting previously unselected package vim.
+#9 89.72 Preparing to unpack .../84-vim_2%3a9.0.1378-2+deb12u2_amd64.deb ...
+#9 89.73 Unpacking vim (2:9.0.1378-2+deb12u2) ...
+#9 89.93 Selecting previously unselected package wait-for-it.
+#9 89.93 Preparing to unpack .../85-wait-for-it_0.0~git20180723-1_all.deb ...
+#9 89.94 Unpacking wait-for-it (0.0~git20180723-1) ...
+#9 89.99 Setting up libconfig-inifiles-perl (3.000003-2) ...
+#9 90.00 Setting up media-types (10.0.0) ...
+#9 90.02 Setting up libgraphite2-3:amd64 (1.3.14-1) ...
+#9 90.04 Setting up libpixman-1-0:amd64 (0.42.2-1) ...
+#9 90.05 Setting up mysql-common (5.8+1.1.0) ...
+#9 90.09 update-alternatives: using /etc/mysql/my.cnf.fallback to provide /etc/mysql/my.cnf (my.cnf) in auto mode
+#9 90.10 Setting up libxau6:amd64 (1:1.0.9-1) ...
+#9 90.11 Setting up libpsl5:amd64 (0.21.2-1) ...
+#9 90.13 Setting up libsodium23:amd64 (1.0.18-1+deb12u1) ...
+#9 90.14 Setting up libgpm2:amd64 (1.20.7-10+b1) ...
+#9 90.16 Setting up restic (0.14.0-1+b5) ...
+#9 90.17 Setting up libdatrie1:amd64 (0.2.13-2+b1) ...
+#9 90.18 Setting up libmagic-mgc (1:5.44-3) ...
+#9 90.20 Setting up libglib2.0-0:amd64 (2.74.6-2+deb12u9) ...
+#9 90.21 No schema files found: doing nothing.
+#9 90.22 Setting up libbrotli1:amd64 (1.0.9-2+b6) ...
+#9 90.24 Setting up libssl3:amd64 (3.0.20-1~deb12u2) ...
+#9 90.25 Setting up libnghttp2-14:amd64 (1.52.0-1+deb12u3) ...
+#9 90.27 Setting up libmagic1:amd64 (1:5.44-3) ...
+#9 90.29 Setting up less (590-2.1~deb12u2) ...
+#9 90.31 Setting up gettext-base (0.21-12) ...
+#9 90.33 Setting up nginx-common (1.22.1-9+deb12u8) ...
+#9 91.10 debconf: unable to initialize frontend: Dialog
+#9 91.10 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#9 91.10 debconf: falling back to frontend: Readline
+#9 91.11 debconf: unable to initialize frontend: Readline
+#9 91.11 debconf: (This frontend requires a controlling tty.)
+#9 91.11 debconf: falling back to frontend: Teletype
+#9 91.36 Setting up file (1:5.44-3) ...
+#9 91.37 Setting up libassuan0:amd64 (2.5.5-5) ...
+#9 91.38 Setting up libsasl2-modules-db:amd64 (2.1.28+dfsg-10) ...
+#9 91.40 Setting up libcap2-bin (1:2.66-4+deb12u3+b1) ...
+#9 91.41 Setting up mariadb-common (1:10.11.14-0+deb12u2) ...
+#9 91.43 update-alternatives: using /etc/mysql/mariadb.cnf to provide /etc/mysql/my.cnf (my.cnf) in auto mode
+#9 91.44 Setting up perl-modules-5.36 (5.36.0-7+deb12u3) ...
+#9 91.45 Setting up vim-common (2:9.0.1378-2+deb12u2) ...
+#9 91.47 Setting up libx11-data (2:1.8.4-2+deb12u2) ...
+#9 91.48 Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2+b2) ...
+#9 91.50 Setting up libncurses6:amd64 (6.4-4) ...
+#9 91.51 Setting up libfribidi0:amd64 (1.0.8-2.1) ...
+#9 91.52 Setting up libssl-dev:amd64 (3.0.20-1~deb12u2) ...
+#9 91.53 Setting up libpng16-16:amd64 (1.6.39-2+deb12u5) ...
+#9 91.55 Setting up libmnl0:amd64 (1.0.4-3) ...
+#9 91.56 Setting up libmariadb3:amd64 (1:10.11.14-0+deb12u2) ...
+#9 91.57 Setting up fonts-dejavu-core (2.37-6) ...
+#9 91.64 Setting up libgdbm-compat4:amd64 (1.23-3) ...
+#9 91.65 Setting up libxtables12:amd64 (1.8.9-2) ...
+#9 91.66 Setting up libsasl2-2:amd64 (2.1.28+dfsg-10) ...
+#9 91.68 Setting up wait-for-it (0.0~git20180723-1) ...
+#9 91.69 Setting up sensible-utils (0.0.17+nmu1) ...
+#9 91.70 Setting up gpgconf (2.2.40-1.1+deb12u2) ...
+#9 91.72 Setting up git-man (1:2.39.5-0+deb12u3) ...
+#9 91.73 Setting up libthai-data (0.1.29-1) ...
+#9 91.74 Setting up libssh2-1:amd64 (1.10.0-3+b1) ...
+#9 91.76 Setting up vim-runtime (2:9.0.1378-2+deb12u2) ...
+#9 91.89 Setting up openssl (3.0.20-1~deb12u2) ...
+#9 91.90 Setting up libbsd0:amd64 (0.11.7-2) ...
+#9 91.92 Setting up libelf1:amd64 (0.188-2.1) ...
+#9 91.93 Setting up libperl5.36:amd64 (5.36.0-7+deb12u3) ...
+#9 91.95 Setting up libonig5:amd64 (6.9.8-1) ...
+#9 91.96 Setting up gpg (2.2.40-1.1+deb12u2) ...
+#9 91.97 Setting up libbpf1:amd64 (1:1.1.2-0+deb12u1) ...
+#9 91.99 Setting up libxdmcp6:amd64 (1:1.1.2-3) ...
+#9 92.00 Setting up libxcb1:amd64 (1.15-1) ...
+#9 92.01 Setting up vim (2:9.0.1378-2+deb12u2) ...
+#9 92.03 update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/editor (editor) in auto mode
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/man1/editor.1.gz because associated file /usr/share/man/man1/vim.1.gz (of link group editor) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/da/man1/editor.1.gz because associated file /usr/share/man/da/man1/vim.1.gz (of link group editor) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/de/man1/editor.1.gz because associated file /usr/share/man/de/man1/vim.1.gz (of link group editor) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/fr/man1/editor.1.gz because associated file /usr/share/man/fr/man1/vim.1.gz (of link group editor) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/it/man1/editor.1.gz because associated file /usr/share/man/it/man1/vim.1.gz (of link group editor) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/ja/man1/editor.1.gz because associated file /usr/share/man/ja/man1/vim.1.gz (of link group editor) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/pl/man1/editor.1.gz because associated file /usr/share/man/pl/man1/vim.1.gz (of link group editor) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/ru/man1/editor.1.gz because associated file /usr/share/man/ru/man1/vim.1.gz (of link group editor) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/tr/man1/editor.1.gz because associated file /usr/share/man/tr/man1/vim.1.gz (of link group editor) doesn't exist
+#9 92.03 update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/ex (ex) in auto mode
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/man1/ex.1.gz because associated file /usr/share/man/man1/vim.1.gz (of link group ex) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/da/man1/ex.1.gz because associated file /usr/share/man/da/man1/vim.1.gz (of link group ex) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/de/man1/ex.1.gz because associated file /usr/share/man/de/man1/vim.1.gz (of link group ex) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/fr/man1/ex.1.gz because associated file /usr/share/man/fr/man1/vim.1.gz (of link group ex) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/it/man1/ex.1.gz because associated file /usr/share/man/it/man1/vim.1.gz (of link group ex) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/ja/man1/ex.1.gz because associated file /usr/share/man/ja/man1/vim.1.gz (of link group ex) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/pl/man1/ex.1.gz because associated file /usr/share/man/pl/man1/vim.1.gz (of link group ex) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/ru/man1/ex.1.gz because associated file /usr/share/man/ru/man1/vim.1.gz (of link group ex) doesn't exist
+#9 92.03 update-alternatives: warning: skip creation of /usr/share/man/tr/man1/ex.1.gz because associated file /usr/share/man/tr/man1/vim.1.gz (of link group ex) doesn't exist
+#9 92.04 update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/rview (rview) in auto mode
+#9 92.04 update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/rvim (rvim) in auto mode
+#9 92.05 update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/vi (vi) in auto mode
+#9 92.05 update-alternatives: warning: skip creation of /usr/share/man/man1/vi.1.gz because associated file /usr/share/man/man1/vim.1.gz (of link group vi) doesn't exist
+#9 92.05 update-alternatives: warning: skip creation of /usr/share/man/da/man1/vi.1.gz because associated file /usr/share/man/da/man1/vim.1.gz (of link group vi) doesn't exist
+#9 92.05 update-alternatives: warning: skip creation of /usr/share/man/de/man1/vi.1.gz because associated file /usr/share/man/de/man1/vim.1.gz (of link group vi) doesn't exist
+#9 92.05 update-alternatives: warning: skip creation of /usr/share/man/fr/man1/vi.1.gz because associated file /usr/share/man/fr/man1/vim.1.gz (of link group vi) doesn't exist
+#9 92.05 update-alternatives: warning: skip creation of /usr/share/man/it/man1/vi.1.gz because associated file /usr/share/man/it/man1/vim.1.gz (of link group vi) doesn't exist
+#9 92.05 update-alternatives: warning: skip creation of /usr/share/man/ja/man1/vi.1.gz because associated file /usr/share/man/ja/man1/vim.1.gz (of link group vi) doesn't exist
+#9 92.05 update-alternatives: warning: skip creation of /usr/share/man/pl/man1/vi.1.gz because associated file /usr/share/man/pl/man1/vim.1.gz (of link group vi) doesn't exist
+#9 92.05 update-alternatives: warning: skip creation of /usr/share/man/ru/man1/vi.1.gz because associated file /usr/share/man/ru/man1/vim.1.gz (of link group vi) doesn't exist
+#9 92.05 update-alternatives: warning: skip creation of /usr/share/man/tr/man1/vi.1.gz because associated file /usr/share/man/tr/man1/vim.1.gz (of link group vi) doesn't exist
+#9 92.06 update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/view (view) in auto mode
+#9 92.06 update-alternatives: warning: skip creation of /usr/share/man/man1/view.1.gz because associated file /usr/share/man/man1/vim.1.gz (of link group view) doesn't exist
+#9 92.06 update-alternatives: warning: skip creation of /usr/share/man/da/man1/view.1.gz because associated file /usr/share/man/da/man1/vim.1.gz (of link group view) doesn't exist
+#9 92.06 update-alternatives: warning: skip creation of /usr/share/man/de/man1/view.1.gz because associated file /usr/share/man/de/man1/vim.1.gz (of link group view) doesn't exist
+#9 92.06 update-alternatives: warning: skip creation of /usr/share/man/fr/man1/view.1.gz because associated file /usr/share/man/fr/man1/vim.1.gz (of link group view) doesn't exist
+#9 92.06 update-alternatives: warning: skip creation of /usr/share/man/it/man1/view.1.gz because associated file /usr/share/man/it/man1/vim.1.gz (of link group view) doesn't exist
+#9 92.06 update-alternatives: warning: skip creation of /usr/share/man/ja/man1/view.1.gz because associated file /usr/share/man/ja/man1/vim.1.gz (of link group view) doesn't exist
+#9 92.06 update-alternatives: warning: skip creation of /usr/share/man/pl/man1/view.1.gz because associated file /usr/share/man/pl/man1/vim.1.gz (of link group view) doesn't exist
+#9 92.06 update-alternatives: warning: skip creation of /usr/share/man/ru/man1/view.1.gz because associated file /usr/share/man/ru/man1/vim.1.gz (of link group view) doesn't exist
+#9 92.06 update-alternatives: warning: skip creation of /usr/share/man/tr/man1/view.1.gz because associated file /usr/share/man/tr/man1/vim.1.gz (of link group view) doesn't exist
+#9 92.06 update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/vim (vim) in auto mode
+#9 92.07 update-alternatives: using /usr/bin/vim.basic to provide /usr/bin/vimdiff (vimdiff) in auto mode
+#9 92.08 Setting up libxcb-render0:amd64 (1.15-1) ...
+#9 92.09 Setting up libjq1:amd64 (1.6-2.1+deb12u1) ...
+#9 92.10 Setting up fontconfig-config (2.14.1-4) ...
+#9 92.23 debconf: unable to initialize frontend: Dialog
+#9 92.23 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#9 92.23 debconf: falling back to frontend: Readline
+#9 92.24 debconf: unable to initialize frontend: Readline
+#9 92.24 debconf: (This frontend requires a controlling tty.)
+#9 92.24 debconf: falling back to frontend: Teletype
+#9 92.50 Setting up iproute2 (6.1.0-3) ...
+#9 92.67 debconf: unable to initialize frontend: Dialog
+#9 92.67 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#9 92.67 debconf: falling back to frontend: Readline
+#9 92.68 debconf: unable to initialize frontend: Readline
+#9 92.68 debconf: (This frontend requires a controlling tty.)
+#9 92.68 debconf: falling back to frontend: Teletype
+#9 92.72 Setting up libedit2:amd64 (3.1-20221030-2) ...
+#9 92.73 Setting up libxcb-shm0:amd64 (1.15-1) ...
+#9 92.75 Setting up libldap-2.5-0:amd64 (2.5.13+dfsg-5) ...
+#9 92.76 Setting up mariadb-client-core (1:10.11.14-0+deb12u2) ...
+#9 92.78 Setting up libthai0:amd64 (0.1.29-1) ...
+#9 92.79 Setting up perl (5.36.0-7+deb12u3) ...
+#9 92.82 Setting up libfreetype6:amd64 (2.12.1+dfsg-5+deb12u4) ...
+#9 92.85 Setting up jq (1.6-2.1+deb12u1) ...
+#9 92.86 Setting up libcurl4:amd64 (7.88.1-10+deb12u14) ...
+#9 92.88 Setting up libx11-6:amd64 (2:1.8.4-2+deb12u2) ...
+#9 92.90 Setting up libharfbuzz0b:amd64 (6.0.0+dfsg-3) ...
+#9 92.91 Setting up curl (7.88.1-10+deb12u14) ...
+#9 92.93 Setting up libfontconfig1:amd64 (2.14.1-4) ...
+#9 92.95 Setting up postgresql-client-common (248+deb12u1) ...
+#9 92.97 Setting up fontconfig (2.14.1-4) ...
+#9 92.98 Regenerating fonts cache... done.
+#9 95.01 Setting up mariadb-client (1:10.11.14-0+deb12u2) ...
+#9 95.04 Setting up libxrender1:amd64 (1:0.9.10-1.1) ...
+#9 95.05 Setting up nginx (1.22.1-9+deb12u8) ...
+#9 95.08 invoke-rc.d: could not determine current runlevel
+#9 95.10 invoke-rc.d: policy-rc.d denied execution of start.
+#9 95.12 Setting up libpango-1.0-0:amd64 (1.50.12+ds-1) ...
+#9 95.14 Setting up libpq5:amd64 (15.18-0+deb12u1) ...
+#9 95.15 Setting up libxext6:amd64 (2:1.3.4-1+b1) ...
+#9 95.17 Setting up postgresql-client-15 (15.18-0+deb12u1) ...
+#9 95.87 update-alternatives: using /usr/share/postgresql/15/man/man1/psql.1.gz to provide /usr/share/man/man1/psql.1.gz (psql.1.gz) in auto mode
+#9 95.95 Setting up libpq-dev (15.18-0+deb12u1) ...
+#9 95.97 Setting up libcurl3-gnutls:amd64 (7.88.1-10+deb12u14) ...
+#9 95.98 Setting up libcairo2:amd64 (1.16.0-7) ...
+#9 95.99 Setting up liberror-perl (0.17029-2) ...
+#9 96.00 Setting up git (1:2.39.5-0+deb12u3) ...
+#9 96.02 Setting up libpangoft2-1.0-0:amd64 (1.50.12+ds-1) ...
+#9 96.04 Setting up libpangocairo-1.0-0:amd64 (1.50.12+ds-1) ...
+#9 96.05 Setting up postgresql-client (15+248+deb12u1) ...
+#9 96.06 Processing triggers for libc-bin (2.36-9+deb12u8) ...
+#9 96.14   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+#9 96.14                                  Dload  Upload   Total   Spent    Left  Speed
+#9 96.14   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100 15916  100 15916    0     0  47869      0 --:--:-- --:--:-- --:--:-- 47939
+#9 96.48 => Downloading nvm from git to '/home/frappe/.nvm'
+#9 96.48 => Cloning into '/home/frappe/.nvm'...
+#9 99.07 * (HEAD detached at FETCH_HEAD)
+#9 99.07   master
+#9 99.08 => Compressing and cleaning up git repository
+#9 99.09 
+#9 99.10 => Appending nvm source string to /root/.bashrc
+#9 99.10 => Appending bash_completion source string to /root/.bashrc
+#9 99.15 => Installing Node.js version 20.19.0
+#9 100.2 Downloading and installing node v20.19.0...
+#9 100.4 Downloading https://nodejs.org/dist/v20.19.0/node-v20.19.0-linux-x64.tar.gz...
+#9 100.7 #=#=#                                                                                                                                                    0.0%                                                                           0.5%                                                                           0.8%                                                                           1.3%#                                                                          1.8%#                                                                          2.3%##                                                                         2.9%##                                                                         3.4%##                                                                         4.0%###                                                                        4.6%###                                                                        5.1%####                                                                       5.7%####                                                                       6.4%####                                                                       6.9%#####                                                                      7.4%#####                                                                      8.0%######                                                                     8.6%######                                                                     9.2%######                                                                     9.7%#######                                                                   10.3%#######                                                                   10.9%########                                                                  11.5%########                                                                  12.2%#########                                                                 12.6%#########                                                                 13.2%#########                                                                 13.7%##########                                                                14.3%##########                                                                14.9%###########                                                               15.5%###########                                                               16.0%###########                                                               16.4%############                                                              16.8%############                                                              17.3%############                                                              17.9%#############                                                             18.5%#############                                                             18.9%##############                                                            19.5%##############                                                            20.2%##############                                                            20.8%###############                                                           21.4%###############                                                           22.1%################                                                          22.6%################                                                          23.2%#################                                                         23.9%#################                                                         24.5%##################                                                        25.1%##################                                                        25.7%##################                                                        26.2%###################                                                       26.9%###################                                                       27.5%####################                                                      28.1%####################                                                      28.7%#####################                                                     29.3%#####################                                                     29.9%#####################                                                     30.5%######################                                                    31.1%######################                                                    31.7%#######################                                                   32.3%#######################                                                   33.0%########################                                                  33.6%########################                                                  34.0%########################                                                  34.7%#########################                                                 35.3%#########################                                                 35.9%##########################                                                36.5%##########################                                                37.1%###########################                                               37.6%###########################                                               38.2%###########################                                               38.8%############################                                              39.4%############################                                              40.0%#############################                                             40.5%#############################                                             41.0%#############################                                             41.6%##############################                                            42.2%##############################                                            42.8%###############################                                           43.2%###############################                                           43.8%###############################                                           44.4%################################                                          45.0%################################                                          45.6%#################################                                         46.0%#################################                                         46.6%#################################                                         47.2%##################################                                        47.7%##################################                                        48.2%###################################                                       48.8%###################################                                       49.4%####################################                                      50.1%####################################                                      50.7%####################################                                      51.2%#####################################                                     51.7%#####################################                                     52.4%######################################                                    53.0%######################################                                    53.6%######################################                                    54.1%#######################################                                   54.7%#######################################                                   55.2%########################################                                  55.8%########################################                                  56.4%#########################################                                 57.1%#########################################                                 57.7%##########################################                                58.3%##########################################                                58.9%##########################################                                59.5%###########################################                               60.1%###########################################                               60.6%############################################                              61.2%############################################                              61.8%############################################                              62.3%#############################################                             62.9%#############################################                             63.3%#############################################                             63.8%##############################################                            64.4%##############################################                            64.7%##############################################                            65.1%###############################################                           65.3%###############################################                           65.6%###############################################                           66.3%################################################                          66.8%################################################                          67.3%################################################                          67.7%#################################################                         68.2%#################################################                         68.7%#################################################                         69.4%##################################################                        70.0%##################################################                        70.6%###################################################                       71.0%###################################################                       71.5%###################################################                       72.0%####################################################                      72.5%####################################################                      72.9%####################################################                      73.4%#####################################################                     73.7%#####################################################                     74.2%#####################################################                     74.7%######################################################                    75.2%######################################################                    75.6%######################################################                    76.0%#######################################################                   76.4%#######################################################                   76.8%#######################################################                   77.3%########################################################                  77.8%########################################################                  78.4%########################################################                  78.8%#########################################################                 79.3%#########################################################                 79.7%#########################################################                 80.1%#########################################################                 80.5%##########################################################                80.8%##########################################################                81.5%###########################################################               82.0%###########################################################               82.3%###########################################################               82.5%###########################################################               82.6%###########################################################               82.7%###########################################################               83.0%############################################################              83.6%############################################################              83.9%############################################################              84.3%############################################################              84.6%#############################################################             85.0%#############################################################             85.3%#############################################################             85.6%#############################################################             85.9%##############################################################            86.2%##############################################################            86.8%##############################################################            87.3%###############################################################           87.7%###############################################################           88.2%###############################################################           88.7%################################################################          89.2%################################################################          89.7%#################################################################         90.3%#################################################################         90.9%#################################################################         91.6%##################################################################        92.1%##################################################################        92.7%###################################################################       93.3%###################################################################       93.9%####################################################################      94.5%####################################################################      95.2%####################################################################      95.7%#####################################################################     96.3%#####################################################################     96.9%######################################################################    97.5%######################################################################    98.2%#######################################################################   98.8%#######################################################################   99.4%#######################################################################  100.0%######################################################################## 100.0%
+#9 120.2 Computing checksum with sha256sum
+#9 120.6 Checksums matched!
+#9 125.0 Creating default alias: default -> 20.19.0 (-> v20.19.0 *)
+#9 125.1 => Node.js version 20.19.0 has been successfully installed
+#9 125.1 => Close and reopen your terminal to start using nvm or run the following to use it now:
+#9 125.1 
+#9 125.1 export NVM_DIR="/home/frappe/.nvm"
+#9 125.1 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#9 125.1 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#9 126.5 v20.19.0 is already installed.
+#9 126.7 Now using node v20.19.0 (npm v10.8.2)
+#9 126.9 Now using node v20.19.0 (npm v10.8.2)
+#9 129.3 
+#9 129.3 added 1 package in 2s
+#9 129.3 npm notice
+#9 129.3 npm notice New major version of npm available! 10.8.2 -> 11.17.0
+#9 129.3 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.17.0
+#9 129.3 npm notice To update run: npm install -g npm@11.17.0
+#9 129.3 npm notice
+#9 129.6 default -> v20.19.0 *
+#9 146.3 Reading package lists...
+#9 147.0 Building dependency tree...
+#9 147.2 Reading state information...
+#9 147.4 The following additional packages will be installed:
+#9 147.4   libfontenc1 libjpeg62-turbo x11-common xfonts-75dpi xfonts-base
+#9 147.4   xfonts-encodings xfonts-utils
+#9 147.4 Suggested packages:
+#9 147.4   xfs | xserver
+#9 147.6 The following NEW packages will be installed:
+#9 147.6   libfontenc1 libjpeg62-turbo wkhtmltox x11-common xfonts-75dpi xfonts-base
+#9 147.6   xfonts-encodings xfonts-utils
+#9 147.8 0 upgraded, 8 newly installed, 0 to remove and 44 not upgraded.
+#9 147.8 Need to get 10.4 MB/27.4 MB of archives.
+#9 147.8 After this operation, 151 MB of additional disk space will be used.
+#9 147.8 Get:1 /wkhtmltox_0.12.6.1-3.bookworm_amd64.deb wkhtmltox amd64 1:0.12.6.1-3.bookworm [17.0 MB]
+#9 147.8 Get:2 http://deb.debian.org/debian bookworm/main amd64 libfontenc1 amd64 1:1.1.4-1 [24.3 kB]
+#9 147.8 Get:3 http://deb.debian.org/debian bookworm/main amd64 libjpeg62-turbo amd64 1:2.1.5-2 [166 kB]
+#9 147.9 Get:4 http://deb.debian.org/debian bookworm/main amd64 x11-common all 1:7.7+23 [252 kB]
+#9 148.2 Get:5 http://deb.debian.org/debian bookworm/main amd64 xfonts-encodings all 1:1.0.4-2.2 [577 kB]
+#9 148.5 Get:6 http://deb.debian.org/debian bookworm/main amd64 xfonts-utils amd64 1:7.7+6 [93.0 kB]
+#9 149.8 Get:7 http://deb.debian.org/debian bookworm/main amd64 xfonts-75dpi all 1:1.0.5 [3365 kB]
+#9 151.7 Get:8 http://deb.debian.org/debian bookworm/main amd64 xfonts-base all 1:1.0.5+nmu1 [5895 kB]
+#9 159.1 debconf: delaying package configuration, since apt-utils is not installed
+#9 159.1 Fetched 10.4 MB in 11s (917 kB/s)
+#9 159.1 Selecting previously unselected package libfontenc1:amd64.
+#9 159.1 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 14038 files and directories currently installed.)
+#9 159.1 Preparing to unpack .../0-libfontenc1_1%3a1.1.4-1_amd64.deb ...
+#9 159.1 Unpacking libfontenc1:amd64 (1:1.1.4-1) ...
+#9 159.2 Selecting previously unselected package libjpeg62-turbo:amd64.
+#9 159.2 Preparing to unpack .../1-libjpeg62-turbo_1%3a2.1.5-2_amd64.deb ...
+#9 159.2 Unpacking libjpeg62-turbo:amd64 (1:2.1.5-2) ...
+#9 159.3 Selecting previously unselected package x11-common.
+#9 159.3 Preparing to unpack .../2-x11-common_1%3a7.7+23_all.deb ...
+#9 159.3 Unpacking x11-common (1:7.7+23) ...
+#9 159.3 Selecting previously unselected package xfonts-encodings.
+#9 159.3 Preparing to unpack .../3-xfonts-encodings_1%3a1.0.4-2.2_all.deb ...
+#9 159.4 Unpacking xfonts-encodings (1:1.0.4-2.2) ...
+#9 159.5 Selecting previously unselected package xfonts-utils.
+#9 159.5 Preparing to unpack .../4-xfonts-utils_1%3a7.7+6_amd64.deb ...
+#9 159.5 Unpacking xfonts-utils (1:7.7+6) ...
+#9 159.6 Selecting previously unselected package xfonts-75dpi.
+#9 159.6 Preparing to unpack .../5-xfonts-75dpi_1%3a1.0.5_all.deb ...
+#9 159.6 Unpacking xfonts-75dpi (1:1.0.5) ...
+#9 160.0 Selecting previously unselected package xfonts-base.
+#9 160.0 Preparing to unpack .../6-xfonts-base_1%3a1.0.5+nmu1_all.deb ...
+#9 160.0 Unpacking xfonts-base (1:1.0.5+nmu1) ...
+#9 160.4 Selecting previously unselected package wkhtmltox.
+#9 160.4 Preparing to unpack .../7-wkhtmltox_0.12.6.1-3.bookworm_amd64.deb ...
+#9 160.4 Unpacking wkhtmltox (1:0.12.6.1-3.bookworm) ...
+#9 164.6 Setting up x11-common (1:7.7+23) ...
+#9 164.8 debconf: unable to initialize frontend: Dialog
+#9 164.8 debconf: (TERM is not set, so the dialog frontend is not usable.)
+#9 164.8 debconf: falling back to frontend: Readline
+#9 164.8 debconf: unable to initialize frontend: Readline
+#9 164.8 debconf: (This frontend requires a controlling tty.)
+#9 164.8 debconf: falling back to frontend: Teletype
+#9 164.9 invoke-rc.d: could not determine current runlevel
+#9 164.9 invoke-rc.d: policy-rc.d denied execution of restart.
+#9 165.0 Setting up libfontenc1:amd64 (1:1.1.4-1) ...
+#9 165.0 Setting up libjpeg62-turbo:amd64 (1:2.1.5-2) ...
+#9 165.1 Setting up xfonts-encodings (1:1.0.4-2.2) ...
+#9 165.1 Setting up xfonts-utils (1:7.7+6) ...
+#9 165.1 Setting up xfonts-base (1:1.0.5+nmu1) ...
+#9 165.2 Setting up xfonts-75dpi (1:1.0.5) ...
+#9 165.3 Setting up wkhtmltox (1:0.12.6.1-3.bookworm) ...
+#9 165.3 Processing triggers for libc-bin (2.36-9+deb12u8) ...
+#9 165.3 Processing triggers for fontconfig (2.14.1-4) ...
+#9 166.0 Reading package lists...
+#9 166.8 Building dependency tree...
+#9 167.0 Reading state information...
+#9 167.3 The following additional packages will be installed:
+#9 167.3   at-spi2-common chromium-common libasound2 libasound2-data libasyncns0
+#9 167.3   libatk1.0-0 libatspi2.0-0 libdav1d6 libdbus-1-3 libdouble-conversion3
+#9 167.3   libdrm-amdgpu1 libdrm-common libdrm-intel1 libdrm-nouveau2 libdrm-radeon1
+#9 167.3   libdrm2 libflac12 libgbm1 libgl1 libgl1-mesa-dri libglapi-mesa libglvnd0
+#9 167.3   libglx-mesa0 libglx0 libharfbuzz-subset0 libice6 libicu72 libllvm15
+#9 167.3   libminizip1 libmp3lame0 libmpg123-0 libnspr4 libnss3 libogg0 libopenh264-7
+#9 167.3   libopus0 libpciaccess0 libpulse0 libsensors-config libsensors5 libsm6
+#9 167.3   libsndfile1 libvorbis0a libvorbisenc2 libwayland-server0 libx11-xcb1 libxaw7
+#9 167.3   libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-randr0
+#9 167.3   libxcb-shape0 libxcb-sync1 libxcb-xfixes0 libxcomposite1 libxdamage1
+#9 167.3   libxfixes3 libxft2 libxi6 libxinerama1 libxkbcommon0 libxkbfile1 libxml2
+#9 167.3   libxmu6 libxmuu1 libxnvctrl0 libxpm4 libxrandr2 libxshmfence1 libxt6
+#9 167.3   libxtst6 libxv1 libxxf86dga1 libxxf86vm1 libz3-4 x11-utils xdg-utils
+#9 167.3   xkb-data
+#9 167.3 Suggested packages:
+#9 167.3   libasound2-plugins alsa-utils opus-tools pciutils pulseaudio lm-sensors
+#9 167.3   mesa-utils
+#9 167.3 Recommended packages:
+#9 167.3   upower udev chromium-sandbox fonts-liberation notification-daemon
+#9 167.3   system-config-printer alsa-ucm-conf alsa-topology-conf at-spi2-core dbus
+#9 167.3   libfile-mimeinfo-perl libnet-dbus-perl libx11-protocol-perl
+#9 167.3   x11-xserver-utils
+#9 167.8 The following NEW packages will be installed:
+#9 167.8   at-spi2-common chromium-common chromium-headless-shell libasound2
+#9 167.8   libasound2-data libasyncns0 libatk1.0-0 libatspi2.0-0 libdav1d6 libdbus-1-3
+#9 167.8   libdouble-conversion3 libdrm-amdgpu1 libdrm-common libdrm-intel1
+#9 167.8   libdrm-nouveau2 libdrm-radeon1 libdrm2 libflac12 libgbm1 libgl1
+#9 167.8   libgl1-mesa-dri libglapi-mesa libglvnd0 libglx-mesa0 libglx0
+#9 167.8   libharfbuzz-subset0 libice6 libicu72 libllvm15 libminizip1 libmp3lame0
+#9 167.8   libmpg123-0 libnspr4 libnss3 libogg0 libopenh264-7 libopus0 libpciaccess0
+#9 167.8   libpulse0 libsensors-config libsensors5 libsm6 libsndfile1 libvorbis0a
+#9 167.8   libvorbisenc2 libwayland-server0 libx11-xcb1 libxaw7 libxcb-dri2-0
+#9 167.8   libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-randr0 libxcb-shape0
+#9 167.8   libxcb-sync1 libxcb-xfixes0 libxcomposite1 libxdamage1 libxfixes3 libxft2
+#9 167.8   libxi6 libxinerama1 libxkbcommon0 libxkbfile1 libxml2 libxmu6 libxmuu1
+#9 167.8   libxnvctrl0 libxpm4 libxrandr2 libxshmfence1 libxt6 libxtst6 libxv1
+#9 167.8   libxxf86dga1 libxxf86vm1 libz3-4 x11-utils xdg-utils xkb-data
+#9 167.9 0 upgraded, 80 newly installed, 0 to remove and 44 not upgraded.
+#9 167.9 Need to get 143 MB of archives.
+#9 167.9 After this operation, 514 MB of additional disk space will be used.
+#9 167.9 Get:1 http://deb.debian.org/debian bookworm/main amd64 at-spi2-common all 2.46.0-5 [162 kB]
+#9 168.0 Get:2 http://deb.debian.org/debian bookworm/main amd64 libxnvctrl0 amd64 525.85.05-3~deb12u1 [13.5 kB]
+#9 168.1 Get:3 http://deb.debian.org/debian bookworm/main amd64 libglvnd0 amd64 1.6.0-1 [51.8 kB]
+#9 168.1 Get:4 http://deb.debian.org/debian bookworm/main amd64 libdrm-common all 2.4.114-1 [7112 B]
+#9 168.1 Get:5 http://deb.debian.org/debian bookworm/main amd64 libdrm2 amd64 2.4.114-1+b1 [37.5 kB]
+#9 168.1 Get:6 http://deb.debian.org/debian bookworm/main amd64 libglapi-mesa amd64 22.3.6-1+deb12u1 [35.7 kB]
+#9 168.1 Get:7 http://deb.debian.org/debian bookworm/main amd64 libx11-xcb1 amd64 2:1.8.4-2+deb12u2 [192 kB]
+#9 168.2 Get:8 http://deb.debian.org/debian bookworm/main amd64 libxcb-dri2-0 amd64 1.15-1 [107 kB]
+#9 168.6 Get:9 http://deb.debian.org/debian bookworm/main amd64 libxcb-dri3-0 amd64 1.15-1 [107 kB]
+#9 168.8 Get:10 http://deb.debian.org/debian bookworm/main amd64 libxcb-glx0 amd64 1.15-1 [122 kB]
+#9 168.8 Get:11 http://deb.debian.org/debian bookworm/main amd64 libxcb-present0 amd64 1.15-1 [105 kB]
+#9 168.8 Get:12 http://deb.debian.org/debian bookworm/main amd64 libxcb-randr0 amd64 1.15-1 [117 kB]
+#9 168.9 Get:13 http://deb.debian.org/debian bookworm/main amd64 libxcb-sync1 amd64 1.15-1 [109 kB]
+#9 168.9 Get:14 http://deb.debian.org/debian bookworm/main amd64 libxcb-xfixes0 amd64 1.15-1 [109 kB]
+#9 169.1 Get:15 http://deb.debian.org/debian bookworm/main amd64 libxfixes3 amd64 1:6.0.0-2 [22.7 kB]
+#9 169.1 Get:16 http://deb.debian.org/debian bookworm/main amd64 libxshmfence1 amd64 1.3-1 [8820 B]
+#9 169.1 Get:17 http://deb.debian.org/debian bookworm/main amd64 libxxf86vm1 amd64 1:1.1.4-1+b2 [20.8 kB]
+#9 169.3 Get:18 http://deb.debian.org/debian bookworm/main amd64 libdrm-amdgpu1 amd64 2.4.114-1+b1 [20.9 kB]
+#9 169.3 Get:19 http://deb.debian.org/debian bookworm/main amd64 libpciaccess0 amd64 0.17-2 [51.4 kB]
+#9 169.3 Get:20 http://deb.debian.org/debian bookworm/main amd64 libdrm-intel1 amd64 2.4.114-1+b1 [64.0 kB]
+#9 169.3 Get:21 http://deb.debian.org/debian bookworm/main amd64 libdrm-nouveau2 amd64 2.4.114-1+b1 [19.1 kB]
+#9 169.4 Get:22 http://deb.debian.org/debian bookworm/main amd64 libdrm-radeon1 amd64 2.4.114-1+b1 [21.8 kB]
+#9 169.6 Get:23 http://deb.debian.org/debian bookworm/main amd64 libicu72 amd64 72.1-3+deb12u1 [9376 kB]
+#9 205.6 Get:24 http://deb.debian.org/debian bookworm/main amd64 libxml2 amd64 2.9.14+dfsg-1.3~deb12u5 [688 kB]
+#9 206.7 Get:25 http://deb.debian.org/debian bookworm/main amd64 libz3-4 amd64 4.8.12-3.1 [7216 kB]
+#9 213.7 Get:26 http://deb.debian.org/debian bookworm/main amd64 libllvm15 amd64 1:15.0.6-4+b1 [23.1 MB]
+#9 224.2 Get:27 http://deb.debian.org/debian bookworm/main amd64 libsensors-config all 1:3.6.0-7.1 [14.3 kB]
+#9 224.2 Get:28 http://deb.debian.org/debian bookworm/main amd64 libsensors5 amd64 1:3.6.0-7.1 [34.2 kB]
+#9 224.2 Get:29 http://deb.debian.org/debian bookworm/main amd64 libgl1-mesa-dri amd64 22.3.6-1+deb12u1 [7239 kB]
+#9 227.4 Get:30 http://deb.debian.org/debian bookworm/main amd64 libglx-mesa0 amd64 22.3.6-1+deb12u1 [147 kB]
+#9 227.4 Get:31 http://deb.debian.org/debian bookworm/main amd64 libglx0 amd64 1.6.0-1 [34.4 kB]
+#9 227.5 Get:32 http://deb.debian.org/debian bookworm/main amd64 libgl1 amd64 1.6.0-1 [88.4 kB]
+#9 227.5 Get:33 http://deb.debian.org/debian bookworm/main amd64 libice6 amd64 2:1.0.10-1 [58.5 kB]
+#9 227.5 Get:34 http://deb.debian.org/debian bookworm/main amd64 libsm6 amd64 2:1.2.3-1 [35.1 kB]
+#9 227.6 Get:35 http://deb.debian.org/debian bookworm/main amd64 libxt6 amd64 1:1.2.1-1.1 [186 kB]
+#9 227.7 Get:36 http://deb.debian.org/debian bookworm/main amd64 libxmu6 amd64 2:1.1.3-3 [60.1 kB]
+#9 227.7 Get:37 http://deb.debian.org/debian bookworm/main amd64 libxpm4 amd64 1:3.5.12-1.1+deb12u1 [48.6 kB]
+#9 227.7 Get:38 http://deb.debian.org/debian bookworm/main amd64 libxaw7 amd64 2:1.0.14-1 [201 kB]
+#9 227.9 Get:39 http://deb.debian.org/debian bookworm/main amd64 libxcb-shape0 amd64 1.15-1 [106 kB]
+#9 227.9 Get:40 http://deb.debian.org/debian bookworm/main amd64 libxcomposite1 amd64 1:0.4.5-1 [16.6 kB]
+#9 227.9 Get:41 http://deb.debian.org/debian bookworm/main amd64 libxft2 amd64 2.3.6-1 [61.8 kB]
+#9 228.0 Get:42 http://deb.debian.org/debian bookworm/main amd64 libxi6 amd64 2:1.8-1+b1 [84.2 kB]
+#9 228.0 Get:43 http://deb.debian.org/debian bookworm/main amd64 libxinerama1 amd64 2:1.1.4-3 [17.8 kB]
+#9 228.0 Get:44 http://deb.debian.org/debian bookworm/main amd64 libxkbfile1 amd64 1:1.1.0-1 [75.2 kB]
+#9 228.1 Get:45 http://deb.debian.org/debian bookworm/main amd64 libxmuu1 amd64 2:1.1.3-3 [23.9 kB]
+#9 228.1 Get:46 http://deb.debian.org/debian bookworm/main amd64 libxrandr2 amd64 2:1.5.2-2+b1 [39.2 kB]
+#9 228.2 Get:47 http://deb.debian.org/debian bookworm/main amd64 libxtst6 amd64 2:1.2.3-1.1 [28.0 kB]
+#9 228.2 Get:48 http://deb.debian.org/debian bookworm/main amd64 libxv1 amd64 2:1.0.11-1.1 [24.8 kB]
+#9 228.2 Get:49 http://deb.debian.org/debian bookworm/main amd64 libxxf86dga1 amd64 2:1.1.5-1 [22.1 kB]
+#9 228.2 Get:50 http://deb.debian.org/debian bookworm/main amd64 x11-utils amd64 7.7+5 [202 kB]
+#9 228.4 Get:51 http://deb.debian.org/debian bookworm/main amd64 xdg-utils all 1.1.3-4.1 [75.5 kB]
+#9 228.4 Get:52 http://deb.debian.org/debian-security bookworm-security/main amd64 chromium-common amd64 149.0.7827.102-1~deb12u1 [26.3 MB]

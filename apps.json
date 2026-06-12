@@ -1,0 +1,17 @@
+[
+  { "url": "https://github.com/frappe/erpnext.git", "branch": "version-15" },
+  { "url": "https://github.com/mymi14s/frappe_paystack.git", "branch": "version-15" },
+  { "url": "https://github.com/shridarpatil/frappe_whatsapp.git", "branch": "master" },
+  { "url": "https://github.com/The-Commit-Company/raven.git", "branch": "main" },
+  { "url": "https://github.com/frappe/payments.git", "branch": "version-15" },
+  { "url": "https://github.com/frappe/print_designer.git", "branch": "main" },
+  { "url": "https://github.com/frappe/hrms.git", "branch": "version-15" },
+  { "url": "https://github.com/frappe/insights.git", "branch": "main" },
+  { "url": "https://github.com/phamos-eu/HR-Addon.git", "branch": "version-15" },
+  { "url": "https://github.com/omkardarves/swagger.git", "branch": "main" },
+  { "url": "https://github.com/frappe/wiki.git", "branch": "master" },
+  { "url": "https://github.com/frappe/ecommerce_integrations.git", "branch": "version-15" },
+  { "url": "https://github.com/frappe/erpnext-shipping.git", "branch": "version-15" },
+  { "url": "https://github.com/frappe/telephony.git", "branch": "develop" },
+  { "url": "https://github.com/frappe/helpdesk.git", "branch": "main" }
+]
