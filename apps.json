@@ -14,5 +14,6 @@
   { "url": "https://github.com/frappe/erpnext-shipping.git", "branch": "version-15" },
   { "url": "https://github.com/frappe/telephony.git", "branch": "develop" },
   { "url": "https://github.com/frappe/helpdesk.git", "branch": "main" },
-  { "url": "https://github.com/frappe/crm.git", "branch": "main" }
+  { "url": "https://github.com/frappe/crm.git", "branch": "main" },
+  { "url": "https://github.com/frappe/drive.git", "branch": "main" }
 ]
