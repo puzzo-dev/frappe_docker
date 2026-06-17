@@ -15,5 +15,8 @@
   { "url": "https://github.com/frappe/telephony.git", "branch": "develop" },
   { "url": "https://github.com/frappe/helpdesk.git", "branch": "main" },
   { "url": "https://github.com/frappe/crm.git", "branch": "main" },
-  { "url": "https://github.com/frappe/drive.git", "branch": "main" }
+  { "url": "https://github.com/frappe/drive.git", "branch": "main" },
+  { "url": "https://github.com/puzzo-dev/event_bookings.git", "branch": "version-15" }
 ]
+
+

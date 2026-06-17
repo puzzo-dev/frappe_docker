@@ -13304,3 +13304,7 @@ Updating files: 100% (4600/4600), done.
 
 #19 exporting to image
 #19 exporting layers
+#19 exporting layers 322.6s done
+#19 writing image sha256:bbf97267e1423dde8af9a177464b39f3bf5ce9b2ed5a48d3b01b9ce18305f313 done
+#19 naming to ghcr.io/puzzo-dev/opscloud/opsnext0626.5:latest done
+#19 DONE 322.6s
