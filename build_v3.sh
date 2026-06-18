@@ -6,5 +6,5 @@ docker build --progress=plain \
   --build-arg=NODE_VERSION=20.19.0 \
   --build-arg=CACHE_BUST="$(sha256sum apps.json | awk '{print $1}')" \
   --secret=id=apps_json,src=apps.json \
-  --tag=ghcr.io/puzzo-dev/opscloud/opsnext0626.6:latest \
+  --tag=ghcr.io/puzzo-dev/opscloud/opsnext0626.12:latest \
   --file=images/custom/Containerfile .
